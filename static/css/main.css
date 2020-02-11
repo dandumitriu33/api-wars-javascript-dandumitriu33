@@ -1,4 +1,7 @@
-html {
-    background-color: gray;
-    font-family: sans-serif;
+body {
+    margin: 5%;
+}
+
+.table {
+    margin-top: 20px;
 }
