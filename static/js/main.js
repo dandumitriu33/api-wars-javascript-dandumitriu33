@@ -1,7 +1,7 @@
-// import {readSWAPI} from './connection.js'
 
-async function fetchData() {
-    const result = await fetch('https://swapi.co/api/planets/');
+
+async function fetchData(page=`https://swapi.co/api/planets/?page=1`) {
+    const result = await fetch(page);
     const data = await result.json();
     console.log(data);
     // console.log(data.results);
@@ -15,68 +15,27 @@ async function fetchData() {
                         <td>${planet.terrain}</td>
                         <td>${planet.surface_water}</td>
                         <td>${planet.population}</td>
-                        <td><button>${planet.terrain.length} resident(s)</button></td>`;
+                        <td><button>${planet.terrain.length} resident(s)</button></td>
+                        <td><button>Vote</button></td>`;
         document.querySelector('#tbody').appendChild(tr);
     }
+    let nextPage = data.next;
+    console.log(nextPage);
+    document.getElementById("next").addEventListener("click", function() {
+        document.querySelector('#tbody').innerHTML = '';
+        fetchData(nextPage);
+        nextPage = {};
+
+    });
+    let previousPage = data.previous;
+    console.log(previousPage);
+    document.getElementById("previous").addEventListener("click", function() {
+        document.querySelector('#tbody').innerHTML = '';
+        fetchData(previousPage);
+        previousPage = {};
+
+    });
 }
 
 fetchData();
 
-
-
-
-// let testPromise = new Promise(function(resolve, reject){
-//     let info = readSWAPI();
-//     if (info) {
-//         resolve(console.log(info.name));
-//     }
-//     else {
-//         reject(console.log('oof'));
-//     }
-// });
-//
-// testPromise.then(function(value) {
-//     console.log('worked', value);
-// });
-// {
-//     console.log('ok 2');
-//     for (let elem of value) {
-//         console.log('entered for');
-//         let tr = document.createElement("tr");
-//         tr.textContent = 'item';
-//         document.querySelector('#tbody').appendChild(tr);
-//     }
-// });
-// testPromise.catch(function(reason) {
-//     console.log('nope 2');
-// });
-// testPromise.finally(function() {
-//     console.log('final dot');
-// });
-//
-// function printSomething(str) {
-//     console.log(JSON.stringify(str));
-//     let tr = document.createElement("tr");
-//     tr.textContent = str.length;
-//     document.querySelector('#tbody').appendChild(tr);
-// }
-
-
-//
-// function buttonPressed(obj, populateFunction) {
-//     for (let i=0; i<10; i++) {
-//         populateFunction(obj);
-//     }
-// }
-//
-//
-// function populateTable(item) {
-//     // let info;
-//     // info = readSWAPI();
-//     // console.log('blip ',info);
-//     let tr = document.createElement("tr");
-//     tr.textContent = item;
-//     document.querySelector('#tbody').appendChild(tr);
-// }
-//
-// buttonPressed(info[0], populateTable);
