@@ -23,11 +23,13 @@ function makeTable(obj) {
     for (let planet of obj.results) {
         let tr = document.createElement("tr");
         let butttonResidents= '';
+        planetsInventory[planet.name] = planet.residents;
         if (planet.residents.length > 0) {
             buttonResidents = `<td><button
                                 type="button"
                                 class="btn btn-outline-dark"
                                 id="${planet.name}_residents"
+                                name="${planet.name}"
                                 data-toggle="modal"
                                 data-target="#exampleModal">${planet.residents.length} resident(s)</button></td>`
         }
@@ -44,6 +46,7 @@ function makeTable(obj) {
                         <td><button type="button" class="btn btn-outline-dark" id="${planet.name}_vote">Vote</button></td>`;
         document.querySelector('#tbody').appendChild(tr);
     }
+    console.log('planet Inventory: ', planetsInventory);
     let buttonPress = document.getElementsByTagName("BUTTON");
     console.log('buttonPress: ', buttonPress);
     for (let buttonPressed of buttonPress) {
@@ -99,7 +102,7 @@ function handleButtonClick(event) {
                       <th>Gender</th>
                     </tr>
                   </thead>
-                  <tbody class="tableResidentsBody">
+                  <tbody id="tableResidentsBody">
                     
                   </tbody>
                 </table>
@@ -113,6 +116,33 @@ function handleButtonClick(event) {
 
     `;
     document.body.appendChild(modalContainer);
+    document.getElementById('tableResidentsBody').innerHTML = '';
+    for (let i=0; i < planetsInventory[this.name].length; i++) {
+        console.log(planetsInventory[this.name][i]);
+        fetch(planetsInventory[this.name][i])
+            .then((response) => {
+                return response.json();
+            })
+            .then((myJson) => {
+                console.log('resident', myJson);
+                addResidentsRow(myJson);
+            });
+    }
+}
+
+function addResidentsRow(myJson) {
+    let residentsTr = document.createElement("tr");
+        residentsTr.innerHTML = `
+              <td>${myJson.name}</td>
+              <td>${myJson.height}</td>
+              <td>${myJson.mass}</td>
+              <td>${myJson.skin_color}</td>
+              <td>${myJson.hair_color}</td>
+              <td>${myJson.eye_color}</td>
+              <td>${myJson.birth_year}</td>
+              <td>${myJson.gender}</td>
+        `;
+    document.getElementById('tableResidentsBody').appendChild(residentsTr);
 }
 
 function reWriteTable(page) {
