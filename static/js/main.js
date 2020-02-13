@@ -46,11 +46,12 @@ function makeTable(obj) {
 }
 
 
-let nextPage = document.getElementById("next")
+let nextPage = document.getElementById("next");
 nextPage.addEventListener("click", handleNext);
-let previousPage = document.getElementById("previous")
+let previousPage = document.getElementById("previous");
 previousPage.addEventListener("click", handlePrevious);
-
+let buttonPress =document.querySelectorAll(".btn btn-outline-dark");
+buttonPress.addEventListener('click', handleButtonClick);
 
 function handleNext() {
     console.log('entered handleNext');
@@ -64,6 +65,10 @@ function handlePrevious() {
     if (page != null) {
         reWriteTable(page);
     }
+}
+
+function handleButtonClick() {
+    console.log('modal open');
 }
 
 function reWriteTable(page) {
