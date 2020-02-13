@@ -1,5 +1,6 @@
 let nextP ='';
 let previousP = '';
+let planetsInventory = {};
 
 
 fetch('https://swapi.co/api/planets/?page=1')
@@ -43,6 +44,11 @@ function makeTable(obj) {
                         <td><button type="button" class="btn btn-outline-dark" id="${planet.name}_vote">Vote</button></td>`;
         document.querySelector('#tbody').appendChild(tr);
     }
+    let buttonPress = document.getElementsByTagName("BUTTON");
+    console.log('buttonPress: ', buttonPress);
+    for (let buttonPressed of buttonPress) {
+        buttonPressed.addEventListener('click', handleButtonClick);
+        };
 }
 
 
@@ -50,8 +56,6 @@ let nextPage = document.getElementById("next");
 nextPage.addEventListener("click", handleNext);
 let previousPage = document.getElementById("previous");
 previousPage.addEventListener("click", handlePrevious);
-let buttonPress =document.querySelectorAll(".btn btn-outline-dark");
-buttonPress.addEventListener('click', handleButtonClick);
 
 function handleNext() {
     console.log('entered handleNext');
@@ -67,8 +71,48 @@ function handlePrevious() {
     }
 }
 
-function handleButtonClick() {
+function handleButtonClick(event) {
     console.log('modal open');
+    console.log(this.id);
+    let modalContainer = document.createElement('div');
+    modalContainer.innerHTML = `
+        <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">${this.id} residents</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Height</th>
+                      <th>Weight(mass)</th>
+                      <th>Skin Color</th>
+                      <th>Hair Color</th>
+                      <th>Eye Color</th>
+                      <th>Birth Year</th>
+                      <th>Gender</th>
+                    </tr>
+                  </thead>
+                  <tbody class="tableResidentsBody">
+                    
+                  </tbody>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    `;
+    document.body.appendChild(modalContainer);
 }
 
 function reWriteTable(page) {
