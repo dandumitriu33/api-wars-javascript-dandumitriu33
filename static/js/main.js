@@ -22,7 +22,9 @@ fetch('https://swapi.co/api/planets/?page=1')
 function makeTable(obj) {
     for (let planet of obj.results) {
         let tr = document.createElement("tr");
-        let butttonResidents= '';
+        let buttonResidents = '';
+        let buttonVote = '';
+        let loginStatus = document.getElementById("login_status");
         planetsInventory[planet.name] = planet.residents;
         if (planet.residents.length > 0) {
             buttonResidents = `<td><button
@@ -36,6 +38,14 @@ function makeTable(obj) {
         else {
             buttonResidents = '<td>No known residents</td>'
         }
+        if (loginStatus.innerText === 'Not Logged In') {
+            buttonVote = '';
+        }
+        else {
+            buttonVote = `
+                          <td><button type="button" class="btn btn-outline-dark" id="${planet.name}_vote">Vote</button></td>
+            `;
+        }
         tr.innerHTML = `<td>${planet.name}</td>
                         <td>${planet.diameter}</td>
                         <td>${planet.climate}</td>
@@ -43,7 +53,8 @@ function makeTable(obj) {
                         <td>${planet.surface_water}</td>
                         <td>${planet.population}</td>
                         ${buttonResidents}
-                        <td><button type="button" class="btn btn-outline-dark" id="${planet.name}_vote">Vote</button></td>`;
+                        ${buttonVote}
+                        `;
         document.querySelector('#tbody').appendChild(tr);
     }
     console.log('planet Inventory: ', planetsInventory);

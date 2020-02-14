@@ -34,9 +34,9 @@
               </div>
           </div>
             {% if session %}
-                <a class="navbar-brand" href="#!">Logged In As {{ session['username'] }}</a>
+                <a class="navbar-brand" id="login_status" href="#!">Logged In As {{ session['username'] }}</a>
             {% else %}
-                <a class="navbar-brand" href="#!">Not Logged In</a>
+                <a class="navbar-brand" id="login_status" href="#!">Not Logged In</a>
             {% endif %}
 
         </nav>

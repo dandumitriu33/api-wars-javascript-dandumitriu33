@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, session, url_for, redirect
+from flask import jsonify
 import data_manager
 import util
 import requests
@@ -17,7 +18,8 @@ def home():
 @app.route('/users')
 def get_users():
     users = data_manager.get_everything()
-    return render_template('users.html', users=users)
+    # return render_template('users.html', users=users)
+    return jsonify(users)
 
 
 @app.route('/register', methods=['GET', 'POST'])
