@@ -70,5 +70,21 @@ def logout():
     return redirect(url_for('get_users'))
 
 
+@app.route('/api/vote', methods=['POST'])
+def vote():
+    username = request.json['voteUsername']
+    planet_name = request.json['votePlanetName']
+    user_id = data_manager.get_user_id_by_username(username)
+    print('planet no exist db response ', data_manager.get_planet_id_by_planet_name(planet_name))
+    if data_manager.get_planet_id_by_planet_name(planet_name) != 'empty':
+        planet_id = data_manager.get_planet_id_by_planet_name(planet_name)
+        print('planet id resulted lol ', planet_id)
+        data_manager.add_vote_for_planet(user_id, planet_name, planet_id)
+    elif data_manager.get_planet_id_by_planet_name(planet_name) == 'empty':
+        print('planet id was not existent ')
+        data_manager.add_vote_for_new_planet(user_id, planet_name)
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)

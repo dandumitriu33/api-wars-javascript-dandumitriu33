@@ -43,7 +43,7 @@ function makeTable(obj) {
         }
         else {
             buttonVote = `
-                          <td><button type="button" class="btn btn-outline-dark" id="${planet.name}_vote">Vote</button></td>
+                          <td><button type="button" class="btn btn-outline-dark" id="vote_${planet.name}">Vote</button></td>
             `;
         }
         tr.innerHTML = `<td>${planet.name}</td>
@@ -61,7 +61,12 @@ function makeTable(obj) {
     let buttonPress = document.getElementsByTagName("BUTTON");
     console.log('buttonPress: ', buttonPress);
     for (let buttonPressed of buttonPress) {
-        buttonPressed.addEventListener('click', handleButtonClick);
+        if (buttonPressed.innerText === 'Vote') {
+            buttonPressed.addEventListener('click', handleVoteButtonClick);
+        }
+        else {
+            buttonPressed.addEventListener('click', handleButtonClick);
+        }
         };
 }
 
@@ -139,6 +144,23 @@ function handleButtonClick(event) {
                 addResidentsRow(myJson);
             });
     }
+}
+
+function handleVoteButtonClick() {
+    let votePlanetName = this.id.slice(5);
+    console.log(votePlanetName);
+    let voteLoginStatus = document.getElementById("login_status");
+    let voteUsername = voteLoginStatus.innerText.slice(13);
+    console.log(voteUsername);
+    let data = { voteUsername, votePlanetName};
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    };
+    fetch('http://localhost:5000/api/vote', options);
 }
 
 function addResidentsRow(myJson) {
