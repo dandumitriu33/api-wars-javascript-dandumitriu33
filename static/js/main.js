@@ -30,7 +30,7 @@ function makeTable(obj) {
             buttonResidents = `<td><button
                                 type="button"
                                 class="btn btn-outline-dark"
-                                id="${planet.name}_residents"
+                                id="${planet.name}"
                                 name="${planet.name}"
                                 data-toggle="modal"
                                 data-target="#exampleModal">${planet.residents.length} resident(s)</button></td>`
@@ -135,6 +135,7 @@ function handleButtonClick(event) {
     `;
     document.body.appendChild(modalContainer);
     document.getElementById('tableResidentsBody').innerHTML = '';
+    document.getElementById('exampleModalLabel').innerText = `${this.id} residents`;
     for (let i=0; i < planetsInventory[this.name].length; i++) {
         console.log(planetsInventory[this.name][i]);
         fetch(planetsInventory[this.name][i])
@@ -212,7 +213,7 @@ function handleVotesStatsClick(event) {
     console.log(this.id);
     let modalContainer = document.createElement('div');
     modalContainer.innerHTML = `
-        <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">

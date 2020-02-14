@@ -56,7 +56,7 @@ def login():
             hashed_password = data_manager.get_password_by_username(request.form['username'])
             if data_manager.verify_password(request.form['password'], hashed_password):
                 session['username'] = request.form['username']
-                return redirect(url_for('get_users'))
+                return redirect(url_for('home'))
             else:
                 return render_template('login.html', message_login_failed=message_login_failed)
         except:
@@ -67,7 +67,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('username', None)
-    return redirect(url_for('get_users'))
+    return redirect(url_for('home'))
 
 
 @app.route('/api/vote', methods=['POST'])
