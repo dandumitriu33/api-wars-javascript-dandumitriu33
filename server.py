@@ -85,6 +85,11 @@ def vote():
         data_manager.add_vote_for_new_planet(user_id, planet_name)
 
 
+@app.route('/votes')
+def votes():
+    votes = data_manager.get_all_votes()
+    return jsonify(votes)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

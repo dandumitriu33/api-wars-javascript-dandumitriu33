@@ -68,3 +68,15 @@ def get_planet_id_by_planet_name(cursor, planet_name):
         return planet_id
     except:
         return 'empty'
+
+
+@connection_to_db.connection_handler
+def get_all_votes(cursor):
+    cursor.execute(f"""
+        SELECT planet_name, COUNT(*) FROM planet_votes
+        GROUP BY planet_name
+        ORDER BY 2 DESC;
+""")
+    result = cursor.fetchall()
+    return result
+

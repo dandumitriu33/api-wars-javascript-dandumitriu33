@@ -17,4 +17,6 @@ body {
     display: inline-block;
 }
 
-
+#votes_stats {
+    cursor: pointer;
+}

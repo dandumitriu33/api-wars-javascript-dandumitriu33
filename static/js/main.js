@@ -67,7 +67,7 @@ function makeTable(obj) {
         else {
             buttonPressed.addEventListener('click', handleButtonClick);
         }
-        };
+        }
 }
 
 
@@ -75,6 +75,8 @@ let nextPage = document.getElementById("next");
 nextPage.addEventListener("click", handleNext);
 let previousPage = document.getElementById("previous");
 previousPage.addEventListener("click", handlePrevious);
+let votesStats = document.getElementById("votes_stats");
+votesStats.addEventListener('click', handleVotesStatsClick);
 
 function handleNext() {
     console.log('entered handleNext');
@@ -187,14 +189,75 @@ function reWriteTable(page) {
         console.log(myJson);
         console.log(myJson.next);
         console.log(myJson.previous);
-        // localStorage.setItem('next', myJson.next);
-        // localStorage.setItem('previous', myJson.previous);
         nextP = myJson.next;
         previousP = myJson.previous;
         document.querySelector('#tbody').innerHTML = '';
         makeTable(myJson);
     });
 }
+
+
+function handleVotesStatsClick(event) {
+    console.log('votes stats modal open');
+    console.log(this.id);
+    let modalContainer = document.createElement('div');
+    modalContainer.innerHTML = `
+        <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Planet Votes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Planet</th>
+                      <th>Votes</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tbody_votes_stats">
+                    
+                  </tbody>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    `;
+    document.body.appendChild(modalContainer);
+    document.getElementById('tbody_votes_stats').innerHTML = '';
+    fetch('http://localhost:5000/votes')
+        .then((response) => {
+            return response.json();
+        })
+        .then((myJson) => {
+            console.log('planet votes ', myJson);
+            for (let i=0; i < myJson.length; i++) {
+                console.log(myJson[i]);
+                addVotesRow(myJson[i]);
+            }
+        });
+
+}
+
+function addVotesRow(planet) {
+    let planetTr = document.createElement("tr");
+        planetTr.innerHTML = `
+              <td>${planet.planet_name}</td>
+              <td>${planet.count}</td>
+        `;
+    document.getElementById('tbody_votes_stats').appendChild(planetTr);
+}
+
+
 
 
 
