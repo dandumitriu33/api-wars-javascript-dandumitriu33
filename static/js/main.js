@@ -163,6 +163,16 @@ function handleVoteButtonClick() {
         body: JSON.stringify(data)
     };
     fetch('http://localhost:5000/api/vote', options);
+    let voteNotification = document.createElement('div')
+    voteNotification.innerHTML = `
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>Vote registered.</strong> Thank you for participating.
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    `;
+    document.getElementById("notification_container").appendChild(voteNotification);
 }
 
 function addResidentsRow(myJson) {
