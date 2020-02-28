@@ -163,7 +163,7 @@ function handleVoteButtonClick() {
         },
         body: JSON.stringify(data)
     };
-    fetch('http://localhost:5000/api/vote', options);
+    fetch('https://secure-inlet-01781.herokuapp.com/api/vote', options);
     let voteNotification = document.createElement('div')
     voteNotification.innerHTML = `
     <div class="alert alert-success alert-dismissible fade show" role="alert">
