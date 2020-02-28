@@ -245,7 +245,7 @@ function handleVotesStatsClick(event) {
     `;
     document.body.appendChild(modalContainer);
     document.getElementById('tbody_votes_stats').innerHTML = '';
-    fetch('http://localhost:5000/votes')
+    fetch('https://secure-inlet-01781.herokuapp.com/votes')
         .then((response) => {
             return response.json();
         })
