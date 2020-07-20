@@ -3,7 +3,7 @@ let previousP = '';
 let planetsInventory = {};
 
 
-fetch('https://swapi.co/api/planets/?page=1')
+fetch('https://swapi.dev/api/planets/?page=1')
     .then((response) => {
         return response.json();
     })

@@ -1,5 +1,5 @@
 // export const readSWAPI = async () => {
-//     const response = await fetch('https://swapi.co/api/planets/1/');
+//     const response = await fetch('https://swapi.dev/api/planets/1/');
 //     const myJson = await response.json();
 //     console.log(myJson);
 //     console.log(myJson.name);
@@ -9,7 +9,7 @@
 
 // export const readSWAPI = function(){
 //     let planetList = [];
-//     fetch('https://swapi.co/api/planets/')
+//     fetch('https://swapi.dev/api/planets/')
 //         .then((response) => response.json())
 //         .then((data) => {
 //             // console.log(data);

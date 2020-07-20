@@ -1,6 +1,6 @@
 
 
-async function fetchData(page=`https://swapi.co/api/planets/?page=1`) {
+async function fetchData(page=`https://swapi.dev/api/planets/?page=1`) {
     const result = await fetch(page);
     const data = await result.json();
     console.log(data);
@@ -88,5 +88,5 @@ async function fetchData(page=`https://swapi.co/api/planets/?page=1`) {
 fetchData();
 
 
-const mainData = fetch(`https://swapi.co/api/planets/?page=1`)
+const mainData = fetch(`https://swapi.dev/api/planets/?page=1`)
 
